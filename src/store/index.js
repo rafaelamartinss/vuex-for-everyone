@@ -9,6 +9,17 @@ const store = createStore({
     getters: {
         availableProducts(state) {
             return state.products.filter(product => product.inventory > 0)
+        }, 
+        cartProducts(state) {
+            return state.cart.map(cartItem => {
+                const product = state.products.find(product => product.id === cartItem.id)
+                product.cartQuantity = cartItem.quantity
+
+                return product
+            })
+        },
+        cartTotal(state, getters) {
+            return getters.cartProducts.reduce((total, product) => total + product.price * product.cartQuantity, 0)
         }
     },
     actions: {

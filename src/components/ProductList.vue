@@ -1,8 +1,6 @@
 <template>
     <div>
         <h1>Product List</h1>
-        <h2>My cart: </h2>
-        <p>{{cart}}</p>
         <ul>
             <li v-for="product in products">
                 {{ product.title }} - {{ product.price }} - {{ product.inventory}}
@@ -17,9 +15,6 @@ export default {
     computed: {
         products() {
             return this.$store.getters.availableProducts
-        },
-        cart() {
-            return this.$store.getters.cart
         }
     },
     created() {
