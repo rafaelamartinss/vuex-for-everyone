@@ -7,6 +7,8 @@
             </li>
         </ul>
         <h3>Total: {{cartTotal}}</h3>
+        <button @click="$store.dispatch('checkout')">Checkout</button>
+        {{$store.state.checkoutStatus}}
     </div>
 </template>
 <script>

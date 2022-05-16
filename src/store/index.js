@@ -4,7 +4,8 @@ import shop from "../api/shop"
 const store = createStore({
     state: {
         products: [],
-        cart: []
+        cart: [],
+        checkoutStatus: ''
     },
     getters: {
         availableProducts(state) {
@@ -42,6 +43,18 @@ const store = createStore({
 
                 context.commit('decrementProductInventory', product)
             }
+        },
+        checkout({state, commit}) {
+            shop.buyProducts(
+                state.cart,
+                () => {
+                    commit('emptyCart')
+                    commit('setCheckoutStatus', 'success')
+                },
+                () => {
+                    commit('setCheckoutStatus', 'fail')
+                }
+            )
         }
     }, 
     mutations: {
@@ -59,6 +72,12 @@ const store = createStore({
         },
         decrementProductInventory(state, product) {
             product.inventory--
+        },
+        emptyCart(state) {
+            state.cart = []
+        },
+        setCheckoutStatus(state, status) {
+            state.checkoutStatus = status
         }
     }
 })
