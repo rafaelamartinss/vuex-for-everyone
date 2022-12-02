@@ -21,6 +21,11 @@ const store = createStore({
         },
         cartTotal(state, getters) {
             return getters.cartProducts.reduce((total, product) => total + product.price * product.cartQuantity, 0)
+        },
+        productIsInStock() {
+            return (product) => {
+                return product.inventory > 0
+            }
         }
     },
     actions: {
@@ -32,16 +37,16 @@ const store = createStore({
                 })
             })
         }, 
-        addProductToCart(context, product) {
-            if(product.inventory > 0) {
-                const cartItem = context.state.cart.find(item => item.id === product.id)
+        addProductToCart({state, getters, commit}, product) {
+            if(getters.productIsInStock(product)) {
+                const cartItem = state.cart.find(item => item.id === product.id)
                 if(!cartItem) {
-                    context.commit('pushProductToCart', product.id) 
+                    commit('pushProductToCart', product.id) 
                 } else {
-                    context.commit('incrementItemQuantity', cartItem)
+                    commit('incrementItemQuantity', cartItem)
                 }
 
-                context.commit('decrementProductInventory', product)
+                commit('decrementProductInventory', product)
             }
         },
         checkout({state, commit}) {
