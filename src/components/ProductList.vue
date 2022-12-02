@@ -13,23 +13,24 @@
     </div>
 </template>
 <script>
-
+import {mapState, mapGetters, mapActions} from 'vuex';
 export default {
     computed: {
-        products() {
-            return this.$store.state.products
-        },
-        productIsInStock() {
-            return this.$store.getters.productIsInStock
-        }
+        ...mapState([
+            'products'
+        ]),
+        ...mapGetters([
+            'productIsInStock'
+        ])
     },
     created() {
-        this.$store.dispatch('fetchProducts')
+        this.fetchProducts()
     },
     methods: {
-        addProductToCart(product) {
-            this.$store.dispatch('addProductToCart', product)
-        }
+        ...mapActions([
+            'addProductToCart',
+            'fetchProducts'
+        ])
     },
 }
 </script>
