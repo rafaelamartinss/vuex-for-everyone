@@ -1,5 +1,5 @@
 import {createStore} from "vuex"
-import shop from "../api/shop"
+import actions from "./actions"
 
 const store = createStore({
     state: {
@@ -28,40 +28,7 @@ const store = createStore({
             }
         }
     },
-    actions: {
-        fetchProducts({commit}) {
-            return new Promise((resolve) => {
-                shop.getProducts(products => {
-                    commit('setProducts', products)
-                    resolve()
-                })
-            })
-        }, 
-        addProductToCart({state, getters, commit}, product) {
-            if(getters.productIsInStock(product)) {
-                const cartItem = state.cart.find(item => item.id === product.id)
-                if(!cartItem) {
-                    commit('pushProductToCart', product.id) 
-                } else {
-                    commit('incrementItemQuantity', cartItem)
-                }
-
-                commit('decrementProductInventory', product)
-            }
-        },
-        checkout({state, commit}) {
-            shop.buyProducts(
-                state.cart,
-                () => {
-                    commit('emptyCart')
-                    commit('setCheckoutStatus', 'success')
-                },
-                () => {
-                    commit('setCheckoutStatus', 'fail')
-                }
-            )
-        }
-    }, 
+    actions,
     mutations: {
         setProducts(state, products) {
             state.products = products
