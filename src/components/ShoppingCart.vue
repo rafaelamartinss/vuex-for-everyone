@@ -8,13 +8,16 @@
         </ul>
         <h3>Total: {{cartTotal}}</h3>
         <button @click="checkout">Checkout</button>
-        {{$store.state.checkoutStatus}}
+        {{checkoutStatus}}
     </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
     computed: {
+        ...mapState({
+            checkoutStatus: state => state.cart.checkoutStatus
+        }),
         ...mapGetters({
             products: 'cartProducts',
             cartTotal: 'cartTotal'

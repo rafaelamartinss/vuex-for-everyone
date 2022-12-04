@@ -16,9 +16,9 @@
 import {mapState, mapGetters, mapActions} from 'vuex';
 export default {
     computed: {
-        ...mapState([
-            'products'
-        ]),
+        ...mapState({
+            products: state => state.products.items
+        }),
         ...mapGetters([
             'productIsInStock'
         ])
