@@ -1,6 +1,10 @@
-# Vue 3 + Vite
+# Vue 3 + Vite + Vuex
 
 😁🎉**Course completed!**
+
+Project from course [Vuex For Everyone](https://vueschool.io/courses/vuex-for-everyone).
+
+## Source code info
 
 This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
